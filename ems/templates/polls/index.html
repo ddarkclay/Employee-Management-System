@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-sm-12">
+    {% if request.role == 'Admin' %}
+    <a href="/polls/add"><button class="btn btn-success float-right">Add Polls</button></a>
+    {% endif %}
+    <h2>List of {{title}}</h2>
+    {% if questions %}
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Polls</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+            <tr>
+                <th scope="row">
+                    <a href="{% url 'Polls_details' question.id %}">{{question.title}}</a>
+                    </td>
+                <td class="text-center">
+                    <a class="btn btn-primary" href="{% url 'Polls_details' question.id %}">Details</a>
+                    <a class="btn btn-warning" href="{% url 'poll_edit' question.id %}">Edit</a>
+                    <a class="btn btn-danger" href="{% url 'poll_delete' question.id %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>There is no Questions available.</p>
+    {% endif %}
+</div>
+{% endblock content %}
